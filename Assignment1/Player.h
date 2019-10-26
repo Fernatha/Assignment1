@@ -39,4 +39,20 @@ public:
 	Time getLastHitTime();
 
 	FloatRect getPosition();
+
+	Vector2f getCenter();
+
+	Sprite getSprite();
+
+	//movement
+	void moveLeft();
+	void moveRight();
+
+	//stop player from moving in target direction
+	void stopRight();
+	void stopLeft();
+
+	void update(float elapsedTime, Vector2i mousePosition);
+
+	int getHealth();
 };
