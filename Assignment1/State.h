@@ -24,8 +24,8 @@ public:
 		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player);
 	
 		sf::RenderWindow* window;
-		TextureHolder* Textures;
-		FontHolder* foonts;
+		TextureHolder* textures;
+		FontHolder* fonts;
 		Player* player;
 	};
 

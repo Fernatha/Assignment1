@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "StateStack.h"
 #include "Foreach.h"
 
@@ -48,4 +49,38 @@ void StateStack::clearStates() {
 
 bool StateStack::isEmpty() const {
 	return mStack.empty();
+}
+
+State::Ptr StateStack::createState(States::ID stateID) {
+	auto found = mFactories.find(stateID);
+	assert(found != mFactories.end());
+
+	return found->second();
+}
+
+void StateStack::applyPendingChanges() {
+	FOREACH(PendingChange change, mPendingList) {
+		switch (change.action) {
+		case Push:
+			mStack.push_back(createState(change.stateID));
+			break;
+
+		case Pop:
+			mStack.pop_back();
+			break;
+
+		case Clear:
+			mStack.clear();
+			break;
+		}
+	}
+
+	mPendingList.clear();
+}
+
+StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
+	:action(action),
+	stateID(stateID)
+{
+
 }

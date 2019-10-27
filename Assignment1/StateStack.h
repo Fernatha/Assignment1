@@ -1,3 +1,4 @@
+#pragma once
 #ifndef STATESTACK_H
 #define STATESTACK_H
 
@@ -5,7 +6,7 @@
 #include "StateIdentifiers.h"
 #include "ResourceIdentifiers.h"
 
-#include<SFML/System/NonCopyable.hpp>
+#include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
 
 #include <vector>
@@ -64,8 +65,10 @@ private:
 
 template <typename T>
 void StateStack::registerState(States::ID stateID) {
-	mFactories[stateID] = [this]()(
+	mFactories[stateID] = [this]()
+	{
 		return State::Ptr(new T(*this, mContext));
-		)
+	};
+		
 }
 #endif
