@@ -9,11 +9,12 @@ namespace sf{
 
 namespace Textures{
 	enum ID {
-		Player,
+		Character,
 		Health,
 		Coin,
 		Background,
-		Tile,
+		Ground,
+		Obstacle,
 		Screen,
 	};
 }

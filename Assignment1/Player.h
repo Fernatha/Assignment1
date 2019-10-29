@@ -1,58 +1,38 @@
-#pragma once
-#include <SFML/Graphics.hpp>
+#ifndef PLAYER_H
+#define PLAYER_H
 
-using namespace sf;
+#include "Command.h"
+
+#include "SFML\Window\Event.hpp"
+
+#include <map>
+
+class CommandQueue;
+
 class Player {
-private:
-	const float START_HEALTH = 4;
-	//where is the player
-	Vector3f m_Position;
-
-	Sprite m_Sprite;
-
-	Texture m_Texture;
-
-	Vector2f m_Resolution;
-
-	IntRect m_Arena;
-
-	int m_TileSize;
-
-	bool leftPressed;
-	bool rightPressed;
-	bool jumpPressed;
-
-	int m_Health;
-
-	Time m_LastHit;
-
-	float m_Speed = 200;
+public:
+	enum Action {
+		MoveLeft,
+		MoveRight,
+		Jump
+	};
 
 public:
 	Player();
-	void spawn(IntRect arena, Vector2f resolution, int tilesize);
 
-	void resetPlayerStats();
+	void handleEvent(const sf::Event& event, CommandQueue& commands);
+	void handleRealtimeInput(CommandQueue& commands);
 
-	bool hit(Time timeHit);
+	void assignKey(Action action, sf::Keyboard::Key key);
+	sf::Keyboard::Key getAssignedKey(Action action) const;
 
-	Time getLastHitTime();
+private:
+	void initializeActions();
+	static bool isRealtimeAction(Action action);
+private:
+	std::map<sf::Keyboard::Key, Action> mKeyBinding;
+	std::map<Action, Command> mActionBinding;
 
-	FloatRect getPosition();
-
-	Vector2f getCenter();
-
-	Sprite getSprite();
-
-	//movement
-	void moveLeft();
-	void moveRight();
-
-	//stop player from moving in target direction
-	void stopRight();
-	void stopLeft();
-
-	void update(float elapsedTime, Vector2i mousePosition);
-
-	int getHealth();
 };
+
+#endif

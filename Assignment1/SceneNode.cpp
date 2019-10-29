@@ -3,6 +3,7 @@
 #include "Command.h"
 #include "Foreach.h"
 
+
 #include <algorithm>
 #include <cassert>
 
@@ -36,8 +37,7 @@ void SceneNode::updateCurrent(sf::Time) {
 	//do nothing by default
 }
 
-void SceneNode::updateChildren(sf::Time dt)
-{
+void SceneNode::updateChildren(sf::Time dt){
 	FOREACH(Ptr& child, mChildren)
 		child->update(dt);
 }
@@ -60,11 +60,11 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states)c
 		child->draw(target, states);
 }
 
-sf::Vector2f SceneNode::getWorldPosition()const {
+sf::Vector2f SceneNode::getWorldPosition() const {
 	return getWorldTransform() * sf::Vector2f();
 }
 
-sf::Transform SceneNode::getWorldTransform()const {
+sf::Transform SceneNode::getWorldTransform() const {
 	sf::Transform transform = sf::Transform::Identity;
 
 	for (const SceneNode* node = this; node != nullptr; node = node->mParent)
